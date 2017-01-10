@@ -64,7 +64,7 @@ class ScanActivity implements Bluetooth.Scan {
     }
 
     public static fyp.ntu.scse.homeautomation.controller.BLEManager {
-        Alert Alertobj = new Alert()
+        Alert Alertobj = new Alert();
         Alertobj.ScanActivity();
         setContentView(R.layout.sensor_cardview);
     }
