@@ -31,57 +31,9 @@ import static fyp.ntu.scse.homeautomation.model.ti.Sensor.MAGNETOMETER;
 
 /*Receiving and Displaying data from the TI SensorTag*/
 
-public class ScanActivity extends MainActivity{
-    public ScanActivity(Context, Intent intent) {
-
-        /*Accelerometer*/
-        if (intent.getAction().equals(Sensor.ACCELEROMETER)) {
-            System.out.println("Accelerometer");
-            System.out.print(ACCELEROMETER);
-            System.out.print("m/s^2");
+    class SensorData {
+        public static Sensor() {
+            Sensor SensorObj = new Sensor();
+            return SensorObj;
         }
-
-        /*Magnetometer*/
-        if (intent.getAction().equals(Sensor.MAGNETOMETER)) {
-            System.out.println("Magnetometer");
-            System.out.print(MAGNETOMETER);
-            System.out.print("µT");
-        }
-
-        /*Gyroscope*/
-        if (intent.getAction().equals(Sensor.GYROSCOPE)) {
-            System.out.println("Gyroscope");
-            System.out.print(GYROSCOPE);
-            System.out.print("rad/s");
-        }
-
-        /*Temperature*/
-        if (intent.getAction().equals(Sensor.IR_TEMPERATURE)) {
-            System.out.println("Temperature ");
-            System.out.print(IR_TEMPERATURE);
-            System.out.print("℃");
-        }
-
-        /*Humidity*/
-        if (intent.getAction().equals(Sensor.HUMIDITY)){
-            System.out.println("Humidity");
-            System.out.print(HUMIDITY);
-            System.out.print("%");
-        }
-
-        /*Light Intensity Sensor*/
-        if (intent.getAction().equals(Sensor.LUXOMETER)){
-            System.out.println("Luxometer");
-            System.out.print(LUXOMETER);
-            System.out.print(" lux");
-        }
-
-        /*Barometer*/
-        if (intent.getAction().equals(Sensor.BAROMETER)){
-            System.out.println("Barometer");
-            System.out.print(BAROMETER);
-            System.out.println("hPa");
-        }
-
-    }
 }
