@@ -1,0 +1,99 @@
+﻿//Class "Scan"
+
+public class ScanActivity extends MainActivity{
+    public ScanActivity(Context, Intent intent) {
+
+        /*Accelerometer*/
+        if (intent.getAction().equals(Sensor.ACCELEROMETER)) {
+            System.out.println("Accelerometer");
+            System.out.print(ACCELEROMETER);
+            System.out.print("m/s^2");
+        }
+
+        /*Magnetometer*/
+        if (intent.getAction().equals(Sensor.MAGNETOMETER)) {
+            System.out.println("Magnetometer");
+            System.out.print(MAGNETOMETER);
+            System.out.print("µT");
+        }
+
+        /*Gyroscope*/
+        if (intent.getAction().equals(Sensor.GYROSCOPE)) {
+            System.out.println("Gyroscope");
+            System.out.print(GYROSCOPE);
+            System.out.print("rad/s");
+        }
+
+        /*Temperature*/
+        if (intent.getAction().equals(Sensor.IR_TEMPERATURE)) {
+            System.out.println("Temperature ");
+            System.out.print(IR_TEMPERATURE);
+            System.out.print("℃");
+        }
+
+        /*Humidity*/
+        if (intent.getAction().equals(Sensor.HUMIDITY)){
+            System.out.println("Humidity");
+            System.out.print(HUMIDITY);
+            System.out.print("%");
+        }
+
+        /*Light Intensity Sensor*/
+        if (intent.getAction().equals(Sensor.LUXOMETER)){
+            System.out.println("Luxometer");
+            System.out.print(LUXOMETER);
+            System.out.print(" lux");
+        }
+
+        /*Barometer*/
+        if (intent.getAction().equals(Sensor.BAROMETER)){
+            System.out.println("Barometer");
+            System.out.print(BAROMETER);
+            System.out.println("hPa");
+        }
+
+    }
+
+
+//Class "Alert"
+
+public ScanActivity(Intent intent) {
+        /*Change in accelerometer value*/
+        if (intent.getAction().equals(Sensor.MOVEMENT_ACC)) {
+            System.out.println("Accelerometer movement");
+            System.out.print(MOVEMENT_ACC);
+            System.out.print("m/s^2");
+        }
+
+        /*Change in Magnetometer value*/
+        if (intent.getAction().equals(Sensor.MOVEMENT_MAG)) {
+            System.out.println("Magnetometer movement");
+            System.out.print(MOVEMENT_MAG);
+            System.out.print("µT");
+        }
+
+        /*Change in gyroscope value*/
+        if (intent.getAction().equals(Sensor.MOVEMENT_GYRO)) {
+            System.out.println("Gyroscope Movement");
+            System.out.print(MOVEMENT_GYRO);
+            System.out.print("rad/s");
+        }
+
+        if(MOVEMENT_ACC-MOVEMENT_ACC!=0){
+            System.out.println(/*Write something here e.g. sound too loud, relocation of device, device stolen*/);
+        }else{
+            System.out.println("Nothing here");
+        }
+
+        if(MOVEMENT_MAG-MOVEMENT_MAG!=0) {
+            System.out.println(/*Write something here e.g. something had happened, geomagnetic/environmental change, new intruder device alert,
+            Wireless failure, Too much Wi-Fi interference time to change channel*/);
+        }else{
+            System.out.println("Nothing here");
+        }
+
+        if(MOVEMENT_GYRO-MOVEMENT_GYRO!=0) {
+            System.out.println(/*Write something here e.g. Earthquake, tsunami, typhoon, natural disaster, speed of rotating wheel */);
+        }else{
+            System.out.println("Nothing here");
+        }
