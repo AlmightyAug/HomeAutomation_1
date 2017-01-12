@@ -32,7 +32,7 @@ import static fyp.ntu.scse.homeautomation.model.ti.Sensor.MAGNETOMETER;
 /*Receiving and Displaying data from the TI SensorTag*/
 
     class SensorData {
-        public static Sensor() {
+        public void Sensor() {
             Sensor SensorObj = new Sensor();
             return SensorObj;
         }

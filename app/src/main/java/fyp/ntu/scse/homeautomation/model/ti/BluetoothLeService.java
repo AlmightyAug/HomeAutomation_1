@@ -916,7 +916,7 @@ public class BluetoothLeService extends Service {
         mBluetoothGatt.readCharacteristic(request.characteristic);
         this.blocking = true; // Set read to be blocking
         while (this.blocking) {
-            timeout ++;
+            timeout++;
             waitIdle(1);
             if (timeout > GATT_TIMEOUT) {
             	this.blocking = false; 
@@ -982,7 +982,7 @@ public class BluetoothLeService extends Service {
                 
                 this.blocking = true; // Set read to be blocking
                 while (this.blocking) {
-                    timeout ++;
+                    timeout++;
                     waitIdle(1);
                     if (timeout > GATT_TIMEOUT) {
                     	this.blocking = false; 
