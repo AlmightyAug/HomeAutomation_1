@@ -1,5 +1,6 @@
 package fyp.ntu.scse.homeautomation;
 
+import android.bluetooth.le.BluetoothLeScanner;
 import android.content.Context;
 import android.content.Intent;
 import fyp.ntu.scse.homeautomation.controller.BLEManager;
@@ -19,13 +20,13 @@ import static fyp.ntu.scse.homeautomation.model.ti.Sensor.MAGNETOMETER;
     class Bluetooth {
         public static fyp.ntu.scse.homeautomation.controller.BLEManager {
             BLEManager BLEManagerobj = new BLEManager();
-            BLEManagerobj.BroadcastReceiver();
+            BLEManagerobj.connectBtDevice();
         }
 
         /*Request Discovery for TI SensorTag Bluetooth Receiver*/
         public static ServiceDiscoveryTask {
             ServiceDiscoveryTask ServiceDiscoveryTaskobj = new ServiceDiscoveryTask();
-            ServiceDiscoveryTaskobj.ServiceDiscoveryTask();
+            ServiceDiscoveryTaskobj.execute(BluetoothLeScanner);
         }
     }
 
@@ -34,6 +35,6 @@ import static fyp.ntu.scse.homeautomation.model.ti.Sensor.MAGNETOMETER;
     class SensorData {
         public void Sensor() {
             Sensor SensorObj = new Sensor();
-            return SensorObj;
+            SensorObj.equals(fyp.ntu.scse.homeautomation.model.ti.Sensor);
         }
 }
