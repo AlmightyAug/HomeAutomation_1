@@ -129,6 +129,23 @@ public class MainActivity extends Activity {
         listview.setAdapter(programAdapter);
 
         Spinner fileChooser = (Spinner) findViewById(R.mipmap);
+        fileChooser.setOnItemSelectedListener newAdapterView.OnItemSelectedListener){
+            @Override
+
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
+                fileSize = file_sizes [position];
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            };
+        }
+        ArrayAdapter <Integer> fileAdapter = new ArrayAdapter<Integer>(MainActivity.this, android.R.layout.simple_list_item_1, file_sizes);
+        fileChooser.setAdapter(fileAdapter);
+
+        distanceChooser.setAdapter(distanceAdapter);
 
 
     }
