@@ -6,11 +6,11 @@ import java.util.Random;
 
 import fyp.ntu.scse.homeautomation.controller.BtDeviceManager;
 import fyp.ntu.scse.homeautomation.sensortag.benchmark.R;
-import fyp.ntu.scse.sensortag.benchmark.control.BtDeviceManager;
-import fyp.ntu.scse.sensortag.benchmark.control.BtLeManager;
-import fyp.ntu.scse.sensortag.benchmark.control.ProgramAdapter;
-import fyp.ntu.scse.sensortag.benchmark.control.ServiceDiscoveryTask;
-import fyp.ntu.scse.sensortag.benchmark.control.ServiceDiscoveryTask.STATUS;
+import fyp.ntu.scse.sensortag.BtDeviceManager;
+import fyp.ntu.scse.sensortag.BtLeManager;
+import fyp.ntu.scse.sensortag.ProgramAdapter;
+import fyp.ntu.scse.sensortag.ServiceDiscoveryTask;
+import fyp.ntu.scse.sensortag.ServiceDiscoveryTask.STATUS;
 import fyp.ntu.scse.sensortag.model.ProgramInfo;
 import fyp.ntu.scse.sensortag.model.SensorTagDevice;
 import fyp.ntu.scse.sensortag.ti.BluetoothLeService;
