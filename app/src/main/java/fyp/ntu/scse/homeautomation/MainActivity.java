@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import fyp.ntu.scse.homeautomation.controller.BtDeviceManager;
+import fyp.ntu.scse.homeautomation.model.ti.BluetoothLeService;
 import fyp.ntu.scse.homeautomation.sensortag.benchmark.R;
 import fyp.ntu.scse.homeautomation.BtDeviceManager;
 import fyp.ntu.scse.homeautomation.BtLeManager;
@@ -84,18 +85,38 @@ public class MainActivity extends Activity {
 
     }
 
+    public MainActivity(){
+        mBtLeManager = BtLeManager.getInstance();
+        mBtDeviceManager = BtDeviceManager.getInstance();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        if(mBtLeManager == null){
+            mBtLeManager = new BtLeManager(getApplicationContext());
+
+        }
+
+        if (!mIsReceiving) {
+            IntentFilter filter = new IntentFilter();
+
+            filter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
+            filter.addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED);
+            filter.addAction(BluetoothLeService.ACTION_DATA_NOTIFY);
+            filter.addAction(BluetoothLeService.ACTION_DATA_WRITE);
+            filter.addAction(BluetoothLeService.ACTION_DATA_READ);
+            registerReceiver(mGattUpdateReceiver, filter);
+
+            mIsReceiving = true;
         }
     }
 
-    public MainActivity(){
-        mBtLeManager = BtLeManager.getInstance();
-        mBtDeviceManager = BtDeviceManager.getInstance();
 
-    }
+
+
 }
 
 /*After clicking on the buttons*/
