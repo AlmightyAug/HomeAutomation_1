@@ -168,7 +168,6 @@ public class MainActivity extends Activity {
     }
 
     @Override
-
     protected void onResume(){
         super.onPostResume();
         updateTitle();
@@ -187,6 +186,24 @@ public class MainActivity extends Activity {
         if(mIsReceiving){
             unregisterReceiver(mGattUpdateReceiver);
             mIsReceiving = false;
+        }
+
+        mBtLeManager.destroy();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        /*Put up menu items for use in Action Bar*/
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getitemId()){
+
         }
     }
 }
