@@ -3,6 +3,8 @@ package fyp.ntu.scse.homeautomation;
 
 import java.util.List;
 import java.util.Random;
+
+import fyp.ntu.scse.homeautomation.controller.BtDeviceManager;
 import fyp.ntu.scse.homeautomation.sensortag.benchmark.R;
 import fyp.ntu.scse.fyp.sensortag.benchmark.control.BtDeviceManager;
 import org.ntu.sce.fyp.sensortag.benchmark.control.BtLeManager;
@@ -60,6 +62,24 @@ public class MainActivity extends Activity {
     private boolean mProgramming = false;
     private ProgramAdapter programAdapter;
 
+    /*Bluetooth Low Energy*/
+    private BluetoothLeService mBtLeService;
+    private BtLeManager mBtLeManager;
+    private BtDeviceManager mBtDeviceManager;
+    private static boolean mIsReceiving = false;
+    private static boolean mIsScanning = false;
+
+    private Toast avocado;
+    private Spinner distanceChooser;
+
+    private void showToast(String msg){
+
+        if(avocado!= null){
+            avocado.cancel();
+        }
+
+        avocado = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+        avocado.show();
 
 
     }
