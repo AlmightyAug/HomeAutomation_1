@@ -150,10 +150,48 @@ public class MainActivity extends Activity {
 
     }
 
+    @Override
+    protected void ActivityOutput(int requestCode, int outputCode, Intent data){
+        super.ActivityOutput(requestCode, outputCode, data);
 
+        if (requestCode==REQ_SCAN_ACT){
+            mIsScanning = false;
 
+            if(resultCode == RESULT_OK){
+                mBtLeService = BluetoothLeService.getInstance();
+                mBtDeviceManager.discoverServices();
 
+            }else if (outputCode == ScanActivity.RESULT_FINISH){
+                finish();
+            }
+        }
+    }
+
+    @Override
+
+    protected void onResume(){
+        super.onPostResume();
+        updateTitle();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        updateTitle();
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+
+        if(mIsReceiving){
+            unregisterReceiver(mGattUpdateReceiver);
+            mIsReceiving = false;
+        }
+    }
 }
+
+
 
 /*After clicking on the buttons*/
 
