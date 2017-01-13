@@ -207,26 +207,58 @@ public class MainActivity extends Activity {
                 startScanActivity();
                 break;
         }
-
+        return super.onOptionsItemSelected(item);
     }
 }
 
+/*Getting data from sensors on TI SensorTag*/
 
-
-/*After clicking on the buttons*/
-
-class ScanActivity implements Bluetooth.Scan {
-
-    public static Scan (Bundle savedInstanceState){
-        Scan Scanobj = new Scan();
-        Scanobj.Bluetooth();
-        setContentView(R.layout.activity_scan);
+private void startScanActivity(){
+    if(!mIsScanning){
+        Intent scanIntent = new Intent(MainActivity.this, ScanActivity.class);
+        startActivityForResult(scanIntent, REQ_SCAN_ACT);
+        mIsScanning = true;
     }
+}
 
-    public static fyp.ntu.scse.homeautomation.controller.BLEManager {
-        Alert Alertobj = new Alert();
-        Alertobj.ScanActivity();
-        setContentView(R.layout.sensor_cardview);
+private void updateTitle() {
+    int devCount = mBtDeviceManager.getNoOfDevices();
+    setTitle(devCount + "device(s) connected");
+
+    Log.d(TAG, devCount + "device(s) connected");
+}
+
+    /*Activate scanning and collecting of data when button is clicked*/
+public void onStart(View v) {
+    if (mProgramming){
+        stopProgramming();
+
+    }else{
+        startProgramming();
     }
+}
+
+private void startProgramming(){
+    byte[] mImage = generateRandomImage(fileSize);
+
+    int distance = (Integer) distanceChooser.getSelectedItem();
+    programAdapter.startProgramming(mImage, distance);
+
+    TextView btnStart = (TextView) findViewById(R.id.sensor_RecyclerView);
+    btnStart.setText("Stop Programming");
+
+    mProgramming = true;
+}
+
+private void stopProgramming(){
+    programAdapter.stopProgramming();
+
+    TextView btnStart = (TextView) findViewById(R.id.sensor_RecyclerView);
+
+    btnStart.setText("Start Programming");
+
+    mProgramming = false;
 
 }
+
+
