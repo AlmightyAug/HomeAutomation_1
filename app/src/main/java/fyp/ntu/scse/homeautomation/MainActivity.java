@@ -126,7 +126,7 @@ public class MainActivity extends Activity {
 
         programAdapter = new ProgramAdapter(this);
         ListView listview = (ListView) findViewById(MainActivity);
-        listview.setAdapter(programAdapter);
+        listview.setAdapter(ProgramAdapter);
 
         Spinner fileChooser = (Spinner) findViewById(R.mipmap);
         fileChooser.setOnItemSelectedListener newAdapterView.OnItemSelectedListener){
@@ -203,8 +203,11 @@ public class MainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getitemId()){
-
+            case.R.id.action_add:
+                startScanActivity();
+                break;
         }
+
     }
 }
 
