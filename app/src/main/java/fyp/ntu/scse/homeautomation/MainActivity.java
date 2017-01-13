@@ -120,6 +120,19 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        programAdapter = new ProgramAdapter(this);
+        ListView listview = (ListView) findViewById(MainActivity);
+        listview.setAdapter(programAdapter);
+
+        Spinner fileChooser = (Spinner) findViewById(R.mipmap);
+
+
+    }
+
 
 
 
