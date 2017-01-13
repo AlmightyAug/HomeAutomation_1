@@ -6,17 +6,17 @@ import java.util.Random;
 
 import fyp.ntu.scse.homeautomation.controller.BtDeviceManager;
 import fyp.ntu.scse.homeautomation.sensortag.benchmark.R;
-import fyp.ntu.scse.fyp.sensortag.benchmark.control.BtDeviceManager;
-import org.ntu.sce.fyp.sensortag.benchmark.control.BtLeManager;
-import org.ntu.sce.fyp.sensortag.benchmark.control.ProgramAdapter;
-import org.ntu.sce.fyp.sensortag.benchmark.control.ServiceDiscoveryTask;
-import org.ntu.sce.fyp.sensortag.benchmark.control.ServiceDiscoveryTask.STATUS;
-import org.ntu.sce.fyp.sensortag.model.ProgramInfo;
-import org.ntu.sce.fyp.sensortag.model.SensorTagDevice;
-import org.ntu.sce.fyp.sensortag.ti.BluetoothLeService;
-import org.ntu.sce.fyp.sensortag.ti.Conversion;
-import org.ntu.sce.fyp.sensortag.ti.GattInfo;
-import org.ntu.sce.fyp.sensortag.ti.HCIDefines;
+import fyp.ntu.scse.sensortag.benchmark.control.BtDeviceManager;
+import fyp.ntu.scse.sensortag.benchmark.control.BtLeManager;
+import fyp.ntu.scse.sensortag.benchmark.control.ProgramAdapter;
+import fyp.ntu.scse.sensortag.benchmark.control.ServiceDiscoveryTask;
+import fyp.ntu.scse.sensortag.benchmark.control.ServiceDiscoveryTask.STATUS;
+import fyp.ntu.scse.sensortag.model.ProgramInfo;
+import fyp.ntu.scse.sensortag.model.SensorTagDevice;
+import fyp.ntu.scse.sensortag.ti.BluetoothLeService;
+import fyp.ntu.scse.sensortag.ti.Conversion;
+import fyp.ntu.scse.sensortag.ti.GattInfo;
+import fyp.ntu.scse.sensortag.ti.HCIDefines;
 import android.app.Activity;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -83,9 +83,22 @@ public class MainActivity extends Activity {
 
 
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+        }
+    }
+
+    public MainActivity(){
+        mBtLeManager = BtLeManager.getInstance();
+        mBtDeviceManager = BtDeviceManager.getInstance();
+
+    }
 }
 
-/*After clicking on the "Scan" buttons*/
+/*After clicking on the buttons*/
 
 class ScanActivity implements Bluetooth.Scan {
 
