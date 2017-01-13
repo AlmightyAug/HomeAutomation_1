@@ -6,18 +6,14 @@ import java.util.Random;
 
 import fyp.ntu.scse.homeautomation.controller.BtDeviceManager;
 import fyp.ntu.scse.homeautomation.model.ti.BluetoothLeService;
-import fyp.ntu.scse.homeautomation.sensortag.benchmark.R;
 import fyp.ntu.scse.homeautomation.BtDeviceManager;
-import fyp.ntu.scse.homeautomation.BtLeManager;
-import fyp.ntu.scse.homeautomation.ProgramAdapter;
-import fyp.ntu.scse.homeautomation.ServiceDiscoveryTask;
-import fyp.ntu.scse.homeautomation.ServiceDiscoveryTask.STATUS;
+import fyp.ntu.scse.homeautomation.BLEManager;
+import fyp.ntu.scse.homeautomation.controller.ServiceDiscoveryTask;
 import fyp.ntu.scse.homeautomation.model.ProgramInfo;
-import fyp.ntu.scse.homeautomation.model.SensorTagDevice;
-import fyp.ntu.scse.homeautomation.BluetoothLeService;
-import fyp.ntu.scse.homeautomation.ti.Conversion;
-import fyp.ntu.scse.homeautomation.ti.GattInfo;
-import fyp.ntu.scse.homeautomation.ti.HCIDefines;
+import fyp.ntu.scse.homeautomation.controller.BluetoothLeService;
+import fyp.ntu.scse.homeautomation.model.ti.Conversion;
+import fyp.ntu.scse.homeautomation.model.ti.GattInfo;
+import fyp.ntu.scse.homeautomation.model.ti.HCIDefines;
 import android.app.Activity;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -111,6 +107,16 @@ public class MainActivity extends Activity {
             registerReceiver(mGattUpdateReceiver, filter);
 
             mIsReceiving = true;
+        }
+
+        /* Bluetooth Generic Attribute Database*/
+
+        Resources res = getResources();
+        XmlResourceParser xpp = res.getXml(R.xml.gatt_uuid);
+        new GattInfo(xpp);
+
+        if(mBtDeviceManager.isEmpty()){
+            startScanActivity();
         }
     }
 
