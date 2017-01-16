@@ -261,4 +261,28 @@ private void stopProgramming(){
 
 }
 
+/* Byte array generation*/
 
+private byte[] generateRandomImage(int size) {
+    byte[] dataBuffer = new byte[size];
+    Random rand = new Random();
+    rand.nextBytes(dataBuffer);
+    return dataBuffer;
+
+}
+
+private void prepareDevice(SensorTagDevice device) {
+    BluetoothGattService mOadService = device.getOadService();
+    BluetoothGattService mConnControlService = device.getConnControlService();
+
+    /*Characteristics list*/
+
+    List<BluetoothGattCharacteristic> mCharListOad = mOadService.getCharacteristics();
+    List<BluetoothGattCharacteristic> mCharListCc = mConnControlService.getCharacteristics();
+
+    String deviceAddress = device.getAccess();
+
+    boolean mServiceOk = mCharListOad.size() == 2 && mCharListCc.size() >= 3;
+
+
+}
