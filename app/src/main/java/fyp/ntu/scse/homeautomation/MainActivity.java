@@ -284,5 +284,37 @@ private void prepareDevice(SensorTagDevice device) {
 
     boolean mServiceOk = mCharListOad.size() == 2 && mCharListCc.size() >= 3;
 
+    if (mServiceOk) {
+        BluetoothGattCharacteristic mCharIdentify = mCharListCc.get(0);
+        BluetoothGattCharacteristic mCharBlock = mCharListOad.get(1);
+        BluetoothGattCharacteristic mCharConnReq = mCharListCc.get(1);
 
-}
+        mCharBlock.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
+        mBtLeService.setCharacteristicNotification(deviceAddress,mCharBlock,true);
+
+        if (Build.VERSION.SDK_INT >= 22) {
+            mBtLeService.requestConnectionPriority(deviceAddress, BluetoothGatt.CONNECTION_PRIORITY_HIGH);
+
+        mCharConnReq.setValue(getConnectionParameters());
+        mBtLeService.writeCharacteristic(deviceAddress, mCharConnReq);
+
+        ProgramInfo programinfo = new ProgramInfo(this, deviceAddress, mCharIdentify, mCharBlock);
+
+        programAdapter.add(programinfo);
+
+    }else{
+        mBtLeService.disconnect(deviceAddress);
+    }
+
+        /*Android Bluetooth Connection interval = 7.5ms, long enough for OAD*/
+
+        private byte[] getConnectionParameters(){
+        byte[] value = {Conversion.loUint16(OAD_CONN_INTERVAL),
+        Conversion.loUint16(OAD_CONN_INTERVAL),
+        Conversion.loUint16(OAD_CONN_INTERVAL),
+
+        Conversion.hiUint16(OAD_SUPERVISION_TIMEOUT)};
+            return value;
+
+        }
+    }
