@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import fyp.ntu.scse.homeautomation.controller.BtDeviceManager;
+import fyp.ntu.scse.homeautomation.model.SensorTag;
 import fyp.ntu.scse.homeautomation.model.ti.BluetoothLeService;
 import fyp.ntu.scse.homeautomation.BtDeviceManager;
 import fyp.ntu.scse.homeautomation.BLEManager;
@@ -15,6 +16,7 @@ import fyp.ntu.scse.homeautomation.model.ti.Conversion;
 import fyp.ntu.scse.homeautomation.model.ti.GattInfo;
 import fyp.ntu.scse.homeautomation.model.ti.HCIDefines;
 import android.app.Activity;
+import android.app.Service;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
@@ -290,31 +292,67 @@ private void prepareDevice(SensorTagDevice device) {
         BluetoothGattCharacteristic mCharConnReq = mCharListCc.get(1);
 
         mCharBlock.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
-        mBtLeService.setCharacteristicNotification(deviceAddress,mCharBlock,true);
+        mBtLeService.setCharacteristicNotification(deviceAddress, mCharBlock, true);
 
         if (Build.VERSION.SDK_INT >= 22) {
             mBtLeService.requestConnectionPriority(deviceAddress, BluetoothGatt.CONNECTION_PRIORITY_HIGH);
 
-        mCharConnReq.setValue(getConnectionParameters());
-        mBtLeService.writeCharacteristic(deviceAddress, mCharConnReq);
+            mCharConnReq.setValue(getConnectionParameters());
+            mBtLeService.writeCharacteristic(deviceAddress, mCharConnReq);
 
-        ProgramInfo programinfo = new ProgramInfo(this, deviceAddress, mCharIdentify, mCharBlock);
+            ProgramInfo programinfo = new ProgramInfo(this, deviceAddress, mCharIdentify, mCharBlock);
 
-        programAdapter.add(programinfo);
+            programAdapter.add(programinfo);
 
-    }else{
-        mBtLeService.disconnect(deviceAddress);
-    }
+        } else {
+            mBtLeService.disconnect(deviceAddress);
+        }
 
         /*Android Bluetooth Connection interval = 7.5ms, long enough for OAD*/
 
-        private byte[] getConnectionParameters(){
-        byte[] value = {Conversion.loUint16(OAD_CONN_INTERVAL),
-        Conversion.loUint16(OAD_CONN_INTERVAL),
-        Conversion.loUint16(OAD_CONN_INTERVAL),
+        private byte[] getConnectionParameters () {
+            byte[] value = {Conversion.loUint16(OAD_CONN_INTERVAL),
+                    Conversion.loUint16(OAD_CONN_INTERVAL),
+                    Conversion.loUint16(OAD_CONN_INTERVAL),
 
-        Conversion.hiUint16(OAD_SUPERVISION_TIMEOUT)};
+                    Conversion.hiUint16(OAD_SUPERVISION_TIMEOUT)};
             return value;
 
         }
+
+        private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
+            private ServiceDiscoveryTask.DiscoveryListener discoveryListener = new ServiceDiscoveryTask.DiscoveryListener() {
+                @Override
+                public void onDiscoveryFinish(ServiceDiscoveryTask.STATUS status, SensorTagDevice device) {
+                    if (status == Service.STATUS.SUCESS) {
+                        prepareDevice(device);
+                    } else {
+                        mBtLeService.disconnect(device.getAddress());
+                    }
+                }
+            };
+
+            @Override
+
+            public void onReceive(Context context, Intent intent){
+                final String action = intent.getAction();
+                final int status = intent.getIntExtra(BluetoothLeService.EXTRA_STATUS, BluetoothGatt.GATT_SUCCESS);
+                final String address = intent.getStringExtra(BluetoothLeService.EXTRA_ADDRESS);
+                final SensorTagDevice device = BtDeviceManager.getInstance().getDevice(address);
+
+                if(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals().getDevice(address));
+                if(status == BluetoothGatt.GATT_SUCCESS){
+                    new ServiceDiscoveryTask(MainActivity.this,discoveryListener).execute(device);
+
+                }else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)){
+                    msg = "Disconnect Status: " + HCIDefines.hciErrorCodeStrings.get(status);
+
+                }
+            }
+
+            showToast(msg);
+        };
     }
+
+}
+
