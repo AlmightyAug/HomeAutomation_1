@@ -40,6 +40,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static android.R.attr.action;
 
 
 public class MainActivity extends Activity {
@@ -351,6 +352,45 @@ private void prepareDevice(SensorTagDevice device) {
             }
 
             showToast(msg);
+
+            programAdapter.remove(address);
+            mBtLeService.close(address);
+
+            updateTitle();
+
+            if(mBtDeviceManager.isEmpty()){
+                startScanActivity();
+            }else if(BluetoothLeService.ACTION_DATA_NOTIFY.equals(action)){
+
+                Log.d(TAG, "ACTION_DATA_NOTIFY: (" + address + " )");
+                byte[] value = intent.getStringExtra(BluetoothLeService.EXTRA_DATA);
+                String uuidStr = intent.getStringExtra(BluetoothLeService.EXTRA_UUID);
+
+                ProgramInfo programInfo = programAdapter.getItem(address);
+                if (uuidStr.equals(programInfo.getCharBlock().getUuid().toString())){
+
+                    //Check object here
+                    String blockobj = String.format("%02x%02x", value[1],value[0]);
+                    Log.d(TAG, " Received block req: " + blockobj + " from [" + address + "]");
+
+                    programInfo.programBlock();
+
+                    programAdapter.notifyDataSetChanged();
+
+                }
+
+                if(programAdapter.isComplete()){
+                    stopProgramming();
+                }
+            }else if (BluetoothLeService.ACTION_DATA_WRITE.equals(action)){
+                Log.d(TAG, "ACTION_DATA_WRITE : [" + address + "], Status: " + status);
+
+                if (status != BluetoothLeService.GATT_SUCCESS){
+                    String err = "GATT error: status =" + status;
+                    Log.e(TAG,err);
+                    showToast(err);
+                }
+            }
         };
     }
 
