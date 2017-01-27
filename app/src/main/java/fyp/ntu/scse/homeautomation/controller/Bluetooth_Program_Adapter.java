@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.BaseAdapter;
+import android.widget.ProgressBar;
 import.android.view.ViewGroup;
 import.android.widget.BaseAdapter;
 import.android.widget.ProgressBar;
@@ -124,5 +125,29 @@ public class Bluetooth_Program_Adapter extends BaseAdapter{
         int byteRate = (int) (programInfo.getProgrammedByteCount() / sec);
 
         String text = "Device Address: [" + programInfo.getDeviceAddress() + "]\n";
+        if (nBlocks>0){
+            text += (iBlocks * ProgramInfo.OAD_BLOCK_SIZE) + "/" + (nBlocks * ProgramInfo.OAD_BLOCK_SIZE) + "/" + (nBlocks * ProgramInfo.OAD_BLOCK_SIZE) + "bytes\n";
 
+            text += iBlocks + "/" + nBlocks + "blocks \n";
+
+            text += "Elapsed Time: " + String.format("%.2f", sec) + " seconds \n";
+
+        }
+
+        text += "Progress [" + progrss + "%]@" + byteRate + " B/s";
+
+        viewHolder.tvDetail.setText(text);
+        viewHolder.pbDetail.setProgress(progress);
+
+        return convertView;
+
+    }
+
+    private class ViewHolder {
+        private TextView tvDetail;
+        private Progressbar pbDetail;
+        public ViewHolder(View rootView) {
+            tvDetail = (TextView) rootView.findViewById(R.id.tv_detail);
+            pbDetail = (ProgressBar) rootView.findViewById(R.id.pb_detail);
+        }
     }
