@@ -33,5 +33,48 @@ public class Bluetooth_Program_Adapter extends BaseAdapter{
         return result;
     }
 
+    public boolean remove(String address) {
+        ProgramInfo programInfo = getItem(address);
+        if(programInfo != null){
+            mList.remove(programInfo);
+            notifyDataSetChanged();
 
+        }
+
+        return false;
+    }
 }
+
+/*Start programming all devices*/
+
+    public void startProgramming(byte[] mImage, int distance){
+        for(ProgramInfo programInfo: mList){
+            programInfo.startProgramming(mImage, distance, mList.size());
+
+        }
+    }
+
+/*Pause programming all devices*/
+
+    public void stopProgramming(){
+        for (ProgramInfo programInfo : mList){
+            programInfo.stopProgramming();
+            if(!programInfo.isComplete()){
+                programInfo.disconnect();
+            }
+        }
+    }
+
+    public boolean isComplete(){
+        for (ProgramInfo programInfo : mList){
+            if(!programInfo.isComplete()){
+                return false;
+            }
+        }
+    }
+
+    @Override
+    public int getCount(){
+        return mList.size();
+
+    }
