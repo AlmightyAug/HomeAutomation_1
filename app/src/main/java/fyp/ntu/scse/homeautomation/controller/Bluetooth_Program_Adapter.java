@@ -112,5 +112,17 @@ public class Bluetooth_Program_Adapter extends BaseAdapter{
 
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
+
         }
+
+        ProgramInfo programInfo = getItem(position);
+        int nBlocks = programInfo.getTotalBlockCount();
+        int iBlocks = programInfo.getProgrammedBlockCount();
+        int progress = (nBlocks > 0) ? ((iBlocks*100)/nBlocks) : 0;
+
+        float sec = ProgramInfo.getTimeElapsed() / 1000f;
+        int byteRate = (int) (programInfo.getProgrammedByteCount() / sec);
+
+        String text = "Device Address: [" + programInfo.getDeviceAddress() + "]\n";
+
     }
