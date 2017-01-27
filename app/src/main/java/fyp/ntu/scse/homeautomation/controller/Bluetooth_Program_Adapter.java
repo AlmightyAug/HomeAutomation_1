@@ -78,3 +78,39 @@ public class Bluetooth_Program_Adapter extends BaseAdapter{
         return mList.size();
 
     }
+
+    @Override
+    public ProgramInfo getItem(int position){
+        return mList.get(position);
+
+    }
+
+    public ProgramInfo getItem(String address){
+        for(ProgramInfo programInfo : mList){
+            if(programInfo.equals(address)){
+                return programInfo;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public long getItemId(int position){
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent){
+        ViewHolder viewHolder;
+
+        if(convertView == null){
+
+            convertView = mLayoutInflater.inflate(R.layout.programInfo_listitem, parent, false);
+            viewHolder = new viewHolder(convertView);
+            convertView.setTag(viewHolder);
+
+        }else{
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+    }
